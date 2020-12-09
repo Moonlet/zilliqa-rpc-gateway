@@ -1,5 +1,7 @@
 const promClient = require("prom-client");
+const { CONFIG } = require("./config");
 promClient.collectDefaultMetrics();
+const Log = require("./logger");
 
 // const reqCounter = new promClient.Counter({
 //     name: 'http_request_count',
@@ -65,7 +67,14 @@ const setupMetrics = (fastify) => {
     next();
   });
 
-  fastify.route({
+  const fastifyMetrics = require("fastify")({
+    logger: Log.getChildLogger({ name: CONFIG.logger.name + "-metrics" }),
+    bodyLimit: 100 * 1024, // 100Kb
+    rewriteUrl: (req) => {
+      return req.url;
+    },
+  });
+  fastifyMetrics.route({
     url: "/metrics",
     method: "GET",
     schema: {
@@ -76,6 +85,11 @@ const setupMetrics = (fastify) => {
       const data = promClient.register.metrics();
       void reply.type("text/plain").send(data);
     },
+  });
+  // Run the server!
+  fastifyMetrics.listen(8081, "0.0.0.0", (err, address) => {
+    if (err) throw err;
+    fastify.log.info(`Metrics listening on ${address}/metrics`);
   });
 };
 

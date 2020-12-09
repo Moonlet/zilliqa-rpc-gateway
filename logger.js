@@ -6,7 +6,10 @@
 function timestamp() {
   return ',"timestamp":"' + new Date().toISOString() + '"';
 }
-var logger;
+
+let config;
+let pino;
+let logger;
 
 const Log = {
   getDefaultConfig(name, level) {
@@ -20,8 +23,9 @@ const Log = {
     //   ],
     // };
   },
-  configure(config) {
-    const pino = require("pino")({
+  configure(conf) {
+    config = conf;
+    pino = require("pino")({
       timestamp,
       prettyPrint: config.prettyPrint,
     });
@@ -33,6 +37,10 @@ const Log = {
   getLogger() {
     return logger;
   },
+  getChildLogger(conf) {
+    return pino.child(Object.assign({}, config, conf));
+  },
+
   fatal(...args) {
     logger && logger.fatal(...args);
   },
