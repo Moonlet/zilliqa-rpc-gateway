@@ -1,0 +1,18 @@
+{
+  "name": "rpc-gateway",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tibi K. <tibi@moonlet.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "axios": "^0.21.0",
+    "fastify": "^3.8.0",
+    "fastify-metrics": "^6.0.3",
+    "fastify-rate-limit": "^4.0.3",
+    "ioredis": "^4.19.2",
+    "pino": "^6.7.0",
+    "pino-pretty": "^4.3.0",
+    "prom-client": "^12.0.0"
+  }
+}
