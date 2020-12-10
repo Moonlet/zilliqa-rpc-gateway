@@ -16,6 +16,16 @@ if (!fs.existsSync(CONFIG_FILE_PATH)) {
 const CONFIG = require(CONFIG_FILE_PATH);
 
 const CONFIG_SCHEMA = Joi.object({
+  listen: Joi.object({
+    app: Joi.object({
+      ip: Joi.string().ip().required(),
+      port: Joi.number().port().required(),
+    }).required(),
+    metrics: Joi.object({
+      ip: Joi.string().ip().required(),
+      port: Joi.number().port().required(),
+    }).required(),
+  }).required(),
   endpoints: Joi.object({
     api: Joi.string().uri().required(),
     raw: Joi.string().uri().required(),

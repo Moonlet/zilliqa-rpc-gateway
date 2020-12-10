@@ -87,10 +87,14 @@ const setupMetrics = (fastify) => {
     },
   });
   // Run the server!
-  fastifyMetrics.listen(8081, "0.0.0.0", (err, address) => {
-    if (err) throw err;
-    fastify.log.info(`Metrics listening on ${address}/metrics`);
-  });
+  fastifyMetrics.listen(
+    CONFIG.listen.metrics.port,
+    CONFIG.listen.metrics.ip,
+    (err, address) => {
+      if (err) throw err;
+      fastify.log.info(`Metrics listening on ${address}/metrics`);
+    }
+  );
 };
 
 module.exports = {

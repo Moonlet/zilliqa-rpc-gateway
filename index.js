@@ -24,7 +24,7 @@ fastify.post("/api", rpcProxy({ url: CONFIG.endpoints.api }));
 fastify.post("/raw", rpcProxy({ url: CONFIG.endpoints.raw }));
 
 // Run the server!
-fastify.listen(8080, "0.0.0.0", (err, address) => {
+fastify.listen(CONFIG.listen.app.port, CONFIG.listen.app.ip, (err, address) => {
   if (err) throw err;
   fastify.log.info(`App server listening on ${address}`);
 });
