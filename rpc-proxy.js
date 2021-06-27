@@ -3,7 +3,13 @@ const axios = require('axios');
 const rpcProxy = (options) => {
     return async (request, reply) => {
         try {
-          const rpcResponse = await axios.post(options.url, request.body, {
+          let url = options.url;
+
+          if (request && request.body && request.body.method === "GetTransactionStatus") {
+            url = "https://api.zilliqa.com";
+          }
+
+          const rpcResponse = await axios.post(url, request.body, {
             responseType: 'stream',
             timeout: 10000
           });
@@ -19,7 +25,7 @@ const rpcProxy = (options) => {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
-            res.statusCode = 500;
+            reply.statusCode = 500;
             reply.send({
               "error": {
                 "code": -123456,
@@ -30,7 +36,7 @@ const rpcProxy = (options) => {
             })
           } else {
             // Something happened in setting up the request that triggered an Error
-            res.statusCode = 500;
+            reply.statusCode = 500;
             reply.send({
               "error": {
                 "code": -123456,
