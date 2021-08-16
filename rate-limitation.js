@@ -11,7 +11,7 @@ redis.on("error", (err) => {
 const setupRateLimitation = (fastify) => {
   fastify.register(require("fastify-rate-limit"), {
     global: true,
-    max: 30,
+    max: 200,
     timeWindow: "10 seconds",
     // skipOnError: true,
     keyGenerator: (req) => {
