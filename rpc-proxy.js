@@ -50,7 +50,7 @@ const rpcProxy = (options) => {
         }
 
         if (logBody) {
-          fastify.log.info(`Rpc-Proxy response: ${reply.statusCode}`, request.body);
+          fastify.log.info(`Rpc-Proxy response: ${reply.statusCode}, requestBody:${JSON.stringify(request.body)}`);
         }
     }
 }
