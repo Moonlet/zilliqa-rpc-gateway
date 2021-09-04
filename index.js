@@ -20,8 +20,8 @@ setupMetrics(fastify);
 setupRateLimitation(fastify);
 
 // Declare api route
-fastify.post("/api", rpcProxy({ url: CONFIG.endpoints.api }));
-fastify.post("/raw", rpcProxy({ url: CONFIG.endpoints.raw }));
+fastify.post("/api", rpcProxy({ url: CONFIG.endpoints.api, fastify }));
+fastify.post("/raw", rpcProxy({ url: CONFIG.endpoints.raw, fastify, logBody: true }));
 
 // Run the server!
 fastify.listen(CONFIG.listen.app.port, CONFIG.listen.app.ip, (err, address) => {

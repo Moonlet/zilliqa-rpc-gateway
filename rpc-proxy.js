@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const rpcProxy = (options) => {
+    const {fastify, logBody} = options;
     return async (request, reply) => {
         try {
           let url = options.url;
@@ -46,6 +47,10 @@ const rpcProxy = (options) => {
               "jsonrpc": "2.0"
             })
           }
+        }
+
+        if (logBody) {
+          fastify.log.info(`Rpc-Proxy response: ${reply.statusCode}`, request.body);
         }
     }
 }
