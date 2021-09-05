@@ -1,12 +1,8 @@
-POST http://localhost:3000/api
+POST http://localhost:8000/raw
+#  POST https://ssn-zilliqa.moonlet.network/raw
 # POST https://api.zilliqa.com
 # POST https://node-zilliqa.moonlet.network/api
 Content-Type: application/json
-CF-Connecting-IP: 192.168.100.100
+# CF-Connecting-IP: 192.168.100.100
 
-{
-    "jsonrpc": "2.0", 
-    "method": "GetTransactionStatus", 
-    "id": 3,
-    "params": ["b0b71a69d58c8e121c3b46248b9ddbedbf752003a6a9cf15caa8cfb4e63fee21"]
-}
+{"method":"GetRawDSBlock","params":["3528"],"jsonrpc":"2.0","id":1}

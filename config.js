@@ -30,6 +30,10 @@ const CONFIG_SCHEMA = Joi.object({
     api: Joi.string().uri().required(),
     raw: Joi.string().uri().required(),
   }).required(),
+  backupEndpoints: Joi.object({
+    api: Joi.array().items(Joi.string().uri()),
+    raw: Joi.array().items(Joi.string().uri()),
+  }).required(),
   rateLimit: Joi.object({
     ipHeader: Joi.string().required(),
     noLimitApiKeys: Joi.array().items(Joi.string()).required(),
